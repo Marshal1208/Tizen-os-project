@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Shortfundly</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="top-nav">
+    <div class="logo">🎬 Shortfundly</div>
+    <ul>
+      <li><a href="NewFile.html">Home</a></li>
+      <li><a href="Search.html">Search</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">My List</a></li>
+    </ul>
+  </nav>
+
+  <!-- Carousel -->
+  <div class="carousel-container">
+    <div id="carousel">
+      <!-- Images injected by JavaScript -->
+    </div>
+    <button id="prevButton">&#10094;</button>
+    <button id="nextButton">&#10095;</button>
+  </div>
+
+  <!-- Sections -->
+  <main>
+    <h2 class="section-title">Trending Short Films</h2>
+    <section id="trending-section">
+      <div class="video-list" id="video-container"></div>
+      <div class="pagination-controls" id="trending-pagination"></div>
+    </section>
+
+    <h2 class="section-title">Love Stories</h2>
+    <section id="love-section">
+      <div class="video-list" id="love-container"></div>
+      <div class="pagination-controls" id="love-pagination"></div>
+    </section>
+
+    <h2 class="section-title">Action Thrillers</h2>
+    <section id="action-section">
+      <div class="video-list" id="action-container"></div>
+      <div class="pagination-controls" id="action-pagination"></div>
+    </section>
+
+    <h2 class="section-title">Dramas</h2>
+    <section id="drama-section">
+      <div class="video-list" id="drama-container"></div>
+      <div class="pagination-controls" id="drama-pagination"></div>
+    </section>
+  </main>
+
+  <div class="pagination">
+    <button id="prevPage">⬅ Previous Page</button>
+    <button id="nextPage">Next Page ➡</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+
+  <!-- Modal -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content big-modal">
+      <div class="banner-image-container">
+        <img id="modalPoster" src="" alt="Poster" class="banner-image" />
+        <div class="overlay"></div>
+        <div class="meta-info">
+          <h2 id="modalTitle"></h2>
+          <p id="metaDetails"></p>
+          <p id="modalDescription"></p>
+          <div class="action-buttons">
+            <button id="playButton">▶ Play</button>
+            <button id="myListButton">+ My List</button>
+          </div>
+          <p id="modalGenre"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

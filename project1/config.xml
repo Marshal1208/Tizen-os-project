@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://shortfundlytv.org/app"
+        version="1.0.0"
+        viewmodes="fullscreen"
+        width="1280"
+        height="720">
+
+  <!-- ✅ Required for Tizen Application -->
+ <tizen:application id="abcde12345.tv" package="abcde12345" required_version="2.4"/>
+
+  <!-- ✅ Entry point HTML -->
+  <content src="NewFile.html"/>
+
+  <!-- ✅ Display name & description -->
+  <name>Shortfundly</name>
+  <icon src="icon.png"/>
+  <description>Shortfundly OTT – Watch Short Films</description>
+  <author email="admin@shortfundly.com" href="http://shortfundly.com">Shortfundly Dev</author>
+
+  <!-- ✅ Profile -->
+  <tizen:profile name="tv"/>
+
+  <!-- ✅ Permissions Required for AVPlay + Internet -->
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:privilege name="http://tizen.org/privilege/avplay"/>
+  <tizen:privilege name="http://tizen.org/privilege/display"/>
+
+  <!-- ✅ Optional for file-based video -->
+  <tizen:privilege name="http://tizen.org/privilege/filesystem.read"/>
+
+  <!-- ✅ Features -->
+  <feature name="http://tizen.org/feature/screen.size.normal"/>
+  <feature name="http://tizen.org/feature/multimedia.player.avplay"/>
+
+  <!-- ✅ Optional: Enable all external domains if needed -->
+  <access origin="*" subdomains="true"/>
+
+  <!-- ✅ App settings -->
+  <tizen:setting screen-orientation="landscape"
+                 background-support="disable"
+                 encryption="disable"
+                 install-location="internal-only"/>
+</widget>

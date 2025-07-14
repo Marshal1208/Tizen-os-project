@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Shortfundly - Details</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .video-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+    .detail-banner {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+    }
+    .detail-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .detail-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+    .detail-content {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      max-width: 600px;
+    }
+    .detail-actions button {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .detail-actions button:focus {
+      outline: 2px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="detail-banner" id="bannerSection">
+    <img id="detailImage" src="" alt="Banner" />
+    <div class="detail-overlay"></div>
+    <div class="detail-content">
+      <h1 id="detailTitle"></h1>
+      <p id="detailDescription"></p>
+      <p id="detailGenre"></p>
+      <div class="detail-actions">
+        <button id="watchButton">▶ Watch Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-container" id="videoContainer">
+    <video id="videoPlayer" controls></video>
+  </div>
+
+<script>
+  var data = JSON.parse(sessionStorage.getItem("selectedVideo"));
+  var watchButton = document.getElementById("watchButton");
+  var videoContainer = document.getElementById("videoContainer");
+  var bannerSection = document.getElementById("bannerSection");
+  var videoPlayer = document.getElementById("videoPlayer");
+  var descriptionEl = document.getElementById("detailDescription");
+
+  if (data) {
+    var imgSrc = data.thumb || data.poster || data.v_poster || "images/default.png";
+    document.getElementById("detailImage").src = imgSrc;
+    document.getElementById("detailTitle").textContent = data.title || "Untitled";
+
+    // Description with "More" logic
+    var fullDesc = data.description || "No description available.";
+    if (fullDesc.length > 50) {
+      var shortDesc = fullDesc.substring(0, 50) + "... ";
+      descriptionEl.innerHTML = shortDesc;
+
+      var moreLink = document.createElement("a");
+      moreLink.href = "#";
+      moreLink.style.color = "#e50914";
+      moreLink.textContent = "More";
+      moreLink.addEventListener("click", function(e) {
+        e.preventDefault();
+        descriptionEl.textContent = fullDesc;
+      });
+      descriptionEl.appendChild(moreLink);
+    } else {
+      descriptionEl.textContent = fullDesc;
+    }
+
+    var genreText = "Genre: " + ((data.category && data.category.name) ? data.category.name : (data.tags || "Unknown"));
+    document.getElementById("detailGenre").textContent = genreText;
+
+    watchButton.addEventListener("click", function() {
+      var playableUrl = null;
+      if (data.sources && data.sources.length) {
+        for (var i = 0; i < data.sources.length; i++) {
+          if (data.sources[i].type === "video/mp4") {
+            playableUrl = data.sources[i].file;
+            break;
+          }
+        }
+      }
+      if (playableUrl) {
+        videoPlayer.src = playableUrl;
+        bannerSection.style.display = "none";
+        videoContainer.style.display = "flex";
+        videoPlayer.play();
+        videoPlayer.focus();
+      } else {
+        alert("No playable video found.");
+      }
+    });
+
+    watchButton.focus();
+  }
+
+  document.addEventListener("keydown", function(e) {
+    switch(e.key) {
+      case "Enter":
+        if (document.activeElement === watchButton) {
+          watchButton.click();
+        } else if (videoContainer.style.display === "flex") {
+          if (videoPlayer.paused) {
+            videoPlayer.play();
+          } else {
+            videoPlayer.pause();
+          }
+        }
+        break;
+      case "Return":
+      case "Backspace":
+      case "Escape":
+        if (videoContainer.style.display === "flex") {
+          videoPlayer.pause();
+          videoPlayer.src = "";
+          videoContainer.style.display = "none";
+          bannerSection.style.display = "block";
+          watchButton.focus();
+        } else {
+          window.history.back();
+        }
+        break;
+    }
+  });
+</script>
+
+</body>
+</html>
